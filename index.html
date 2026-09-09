@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<!-- ALXCON VS Code project -->
+<html lang="el">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALXCON — Alexandris Technical Constructions</title>
+  <meta name="description" content="ALXCON — Alexandris Technical Constructions">
+  <style>
+    :root {
+      --bg: #050505;
+      --panel: #0a0a0a;
+      --text: #f3f3f3;
+      --muted: #a9a9a9;
+      --line: #232323;
+      --max: 1440px;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      letter-spacing: .02em;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .wrap {
+      width: min(calc(100% - 60px), var(--max));
+      margin: auto
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(5, 5, 5, .96);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav {
+      min-height: 86px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .logo {
+      width: 290px;
+      max-height: 70px;
+      object-fit: contain;
+      object-position: left center
+    }
+
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      font-size: 12px;
+      letter-spacing: .12em
+    }
+
+    .menu a {
+      opacity: .9
+    }
+
+    .menu a:hover {
+      opacity: 1
+    }
+
+    .quote {
+      border: 1px solid #6f6f6f;
+      padding: 14px 18px
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 41.5% 58.5%;
+      min-height: 600px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-copy {
+      padding: 58px 54px 50px max(56px, calc((100vw - var(--max))/2 + 30px));
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: linear-gradient(145deg, #0b0b0b, #050505 72%);
+    }
+
+    .kicker {
+      font-size: 12px;
+      letter-spacing: .42em;
+      color: #b6b6b6;
+      margin-bottom: 26px
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-weight: 300;
+      font-size: clamp(34px, 3.2vw, 54px);
+      line-height: 1.05;
+      letter-spacing: .035em;
+      white-space: nowrap;
+    }
+
+    .rule {
+      width: 52px;
+      height: 2px;
+      background: #fff;
+      margin: 26px 0
+    }
+
+    .hero p {
+      font-size: 17px;
+      line-height: 1.55;
+      color: #e3e3e3;
+      max-width: 500px;
+      margin: 0
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #888;
+      padding: 15px 22px;
+      margin-top: 34px;
+      width: max-content;
+      font-size: 12px;
+      letter-spacing: .13em;
+      transition: .2s;
+    }
+
+    .btn:hover {
+      background: #fff;
+      color: #000
+    }
+
+    .hero-media {
+      position: relative;
+      overflow: hidden;
+      min-height: 600px
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity .8s ease
+    }
+
+    .slide.active {
+      opacity: 1
+    }
+
+    .slide:after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0, 0, 0, .16), rgba(0, 0, 0, 0));
+    }
+
+    .slider-ui {
+      position: absolute;
+      right: 26px;
+      bottom: 22px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      letter-spacing: .15em
+    }
+
+    .slider-ui button {
+      width: 42px;
+      height: 42px;
+      background: rgba(0, 0, 0, .55);
+      border: 1px solid #888;
+      color: #fff;
+      font-size: 19px;
+      cursor: pointer
+    }
+
+    section {
+      border-bottom: 1px solid var(--line)
+    }
+
+    .section {
+      padding: 30px 0 36px
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 26px
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: .28em
+    }
+
+    .section-link {
+      font-size: 11px;
+      letter-spacing: .12em;
+      color: #c2c2c2
+    }
+
+    .services {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      border-top: 1px solid #171717;
+      border-bottom: 1px solid #171717;
+    }
+
+    .service {
+      min-height: 150px;
+      padding: 18px 14px 16px;
+      border-right: 1px solid #202020;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .service:last-child {
+      border-right: none
+    }
+
+    .icon {
+      font-size: 38px;
+      line-height: 1;
+      margin-bottom: 22px;
+      font-weight: 300
+    }
+
+    .service-title {
+      font-size: 13px;
+      line-height: 1.5
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px
+    }
+
+    .project {
+      overflow: hidden
+    }
+
+    .project-image {
+      height: 270px;
+      overflow: hidden;
+      background: #0b0b0b
+    }
+
+    .project-image img {
+      transition: opacity .35s ease, transform .45s;
+      opacity: 1
+    }
+
+    .project:hover img {
+      transform: scale(1.035)
+    }
+
+    .project-copy {
+      padding: 12px 2px 0
+    }
+
+    .project-title {
+      font-size: 15px
+    }
+
+    .project-meta {
+      font-size: 11px;
+      color: #b3b3b3;
+      margin-top: 7px
+    }
+
+    .project-arrow {
+      float: right;
+      font-size: 20px;
+      margin-top: -18px
+    }
+
+    .about {
+      display: grid;
+      grid-template-columns: 46% 38% 16%;
+      min-height: 450px;
+    }
+
+    .about-image {
+      position: relative;
+      overflow: hidden
+    }
+
+    .about-image img {
+      filter: grayscale(1)
+    }
+
+    .about-overlay {
+      position: absolute;
+      left: 60px;
+      bottom: 62px;
+      font-size: 24px;
+      line-height: 1.45;
+      letter-spacing: .05em;
+      font-weight: 300
+    }
+
+    .about-copy {
+      padding: 54px 38px 46px
+    }
+
+    .about-copy .kicker {
+      margin-bottom: 16px
+    }
+
+    .about-copy h2 {
+      font-size: 36px;
+      line-height: 1.2;
+      font-weight: 300;
+      margin: 0 0 18px
+    }
+
+    .about-copy p {
+      font-size: 14px;
+      line-height: 1.65;
+      color: #d0d0d0;
+      margin: 0
+    }
+
+    .about-stats {
+      border-left: 1px solid #252525;
+      padding: 42px 24px;
+    }
+
+    .stat {
+      margin-bottom: 30px
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 27px;
+      font-weight: 300;
+      margin-bottom: 5px
+    }
+
+    .stat span {
+      font-size: 10px;
+      letter-spacing: .13em;
+      color: #b8b8b8;
+      line-height: 1.4
+    }
+
+    .cta-band {
+      display: grid;
+      grid-template-columns: 64% 36%;
+      min-height: 150px;
+    }
+
+    .cta-photo {
+      position: relative;
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, .28), rgba(0, 0, 0, .18)),
+        url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=88') center/cover;
+    }
+
+    .cta-text {
+      position: absolute;
+      left: 7%;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .cta-text h3 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: .08em
+    }
+
+    .cta-text p {
+      margin: 8px 0 0;
+      font-size: 17px;
+      color: #ddd
+    }
+
+    .cta-side {
+      background: linear-gradient(135deg, #151515, #0a0a0a);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    footer {
+      padding: 30px 0 22px
+    }
+
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px
+    }
+
+    .footer-logo {
+      width: 230px
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 32px;
+      font-size: 11px;
+      letter-spacing: .11em
+    }
+
+    .social {
+      font-size: 26px;
+      display: flex;
+      gap: 18px
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 26px;
+      padding-top: 20px;
+      border-top: 1px solid #202020;
+      font-size: 10px;
+      color: #777
+    }
+
+    .contactline {
+      color: #aaa
+    }
+
+    .mobile-toggle {
+      display: none;
+      border: 1px solid #6f6f6f;
+      background: transparent;
+      color: #fff;
+      padding: 9px 11px;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer
+    }
+
+    @media(max-width:1000px) {
+      .menu {
+        display: none
+      }
+
+      .menu.open {
+        display: flex;
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        top: 72px;
+        padding: 18px;
+        background: #0a0a0a;
+        border: 1px solid var(--line);
+        flex-direction: column;
+        align-items: stretch;
+        gap: 20px
+      }
+
+      .mobile-toggle {
+        display: block
+      }
+
+      .hero {
+        grid-template-columns: 1fr
+      }
+
+      .hero-media {
+        min-height: 440px
+      }
+
+      .services {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .projects {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .about {
+        grid-template-columns: 1fr
+      }
+
+      .about-stats {
+        border-left: none;
+        border-top: 1px solid #222
+      }
+
+      .cta-band {
+        grid-template-columns: 1fr
+      }
+
+      .cta-photo,
+      .cta-side {
+        min-height: 160px
+      }
+    }
+
+    @media(max-width:620px) {
+      .wrap {
+        width: calc(100% - 24px)
+      }
+
+      .nav {
+        min-height: 72px
+      }
+
+      .logo {
+        width: 210px
+      }
+
+      .hero-copy {
+        padding: 54px 18px
+      }
+
+      .hero-media {
+        min-height: 340px
+      }
+
+      .hero h1 {
+        font-size: clamp(36px, 10vw, 42px);
+        white-space: normal
+      }
+
+      .services {
+        grid-template-columns: 1fr
+      }
+
+      .service {
+        border-right: none;
+        border-bottom: 1px solid #202020
+      }
+
+      .projects {
+        grid-template-columns: 1fr
+      }
+
+      .project-image {
+        height: 290px
+      }
+
+      .about-overlay {
+        left: 26px;
+        bottom: 28px;
+        font-size: 22px
+      }
+
+      .about-copy {
+        padding: 32px 24px
+      }
+
+      .cta-text {
+        left: 24px
+      }
+
+      .footer-top,
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start
+      }
+
+      .footer-nav {
+        flex-wrap: wrap
+      }
+
+      .contactline {
+        line-height: 1.8
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="wrap nav">
+      <a href="#home"><img class="logo" src="assets/alxcon-logo.png" alt="ALXCON"></a>
+      <nav class="menu">
+        <a href="#home">HOME</a>
+        <a href="projects.html">PROJECTS</a>
+        <a href="contact.html">CONTACT</a>
+        <a class="quote" href="contact.html">ΖΗΤΗΣΤΕ ΠΡΟΣΦΟΡΑ →</a>
+      </nav>
+      <button class="mobile-toggle" type="button" aria-label="Άνοιγμα μενού" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="kicker">IDEAS · PLANS · SOLUTIONS</div>
+        <h1>TECHNICAL<br>CONSTRUCTIONS<br>THAT DELIVER</h1>
+        <div class="rule"></div>
+        <p>Σύγχρονες τεχνικές λύσεις<br>με αξιοπιστία και αποτέλεσμα.</p>
+        <a class="btn" href="#about">ΓΝΩΡΙΣΤΕ ΜΑΣ →</a>
+      </div>
+
+      <div class="hero-media">
+        <div class="slide active"><img
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1800&q=90"
+            alt="Κατοικία στη Γλυφάδα">
+        </div>
+        <div class="slide"><img
+            src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=90"
+            alt="Κατοικία στη Γλυφάδα">
+        </div>
+        <div class="slide"><img
+            src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1800&q=90"
+            alt="Κατοικία στη Γλυφάδα">
+        </div>
+        <div class="slide"><img
+            src="https://images.unsplash.com/photo-1597404294360-feeeda04612e?auto=format&fit=crop&w=1800&q=90"
+            alt="EV Charger Tesla">
+        </div>
+        <div class="slide"><img
+            src="https://images.unsplash.com/photo-1617886322168-72f4e4a8b1a4?auto=format&fit=crop&w=1800&q=90"
+            alt="EV Charger Tesla">
+        </div>
+        <div class="slide"><img
+            src="https://images.unsplash.com/photo-1592833159155-c62df1b65634?auto=format&fit=crop&w=1800&q=90"
+            alt="EV Charger Tesla">
+        </div>
+        <div class="slide"><img
+            src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1800&q=90"
+            alt="Κατάστημα στην Αθήνα">
+        </div>
+        <div class="slide"><img
+            src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1800&q=90"
+            alt="Κατάστημα στην Αθήνα">
+        </div>
+        <div class="slide"><img
+            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1800&q=90"
+            alt="Κατάστημα στην Αθήνα">
+        </div>
+        <div class="slide"><img
+            src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1800&q=90"
+            alt="Εξωτερικός φωτισμός">
+        </div>
+        <div class="slide"><img
+            src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1800&q=90"
+            alt="Εξωτερικός φωτισμός">
+        </div>
+        <div class="slide"><img
+            src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=90"
+            alt="Εξωτερικός φωτισμός">
+        </div>
+        <div class="slider-ui">
+          <span id="counter">01 / 12</span>
+          <button onclick="moveSlide(-1)">←</button>
+          <button onclick="moveSlide(1)">→</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>ΟΙ ΥΠΗΡΕΣΙΕΣ ΜΑΣ ───</h2>
+          <a class="section-link" href="#">ΔΕΙΤΕ ΟΛΕΣ ΤΙΣ ΥΠΗΡΕΣΙΕΣ →</a>
+        </div>
+        <div class="services">
+          <div class="service">
+            <div class="icon">ϟ</div>
+            <div class="service-title">Ηλεκτρολογικές<br>Εγκαταστάσεις</div>
+          </div>
+          <div class="service">
+            <div class="icon">◎</div>
+            <div class="service-title">Κλιματισμός<br>& Εξαερισμός</div>
+          </div>
+          <div class="service">
+            <div class="icon">▣</div>
+            <div class="service-title">EV Chargers</div>
+          </div>
+          <div class="service">
+            <div class="icon">⌂</div>
+            <div class="service-title">Ανακαινίσεις<br>Κατοικιών & Επαγγελματικών Χώρων</div>
+          </div>
+          <div class="service">
+            <div class="icon">◇</div>
+            <div class="service-title">Τεχνικός Ασφαλείας<br>& Πιστοποιήσεις</div>
+          </div>
+          <div class="service">
+            <div class="icon">≡</div>
+            <div class="service-title">Μελέτες<br>& Συμβουλευτική</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>ΠΡΟΣΦΑΤΑ ΕΡΓΑ ───</h2>
+          <a class="section-link" href="projects.html">ΟΛΑ ΤΑ ΕΡΓΑ →</a>
+        </div>
+        <div class="projects">
+          <a class="project" data-project="glyfada" href="project-detail.html?project=glyfada">
+            <div class="project-image"><img
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=88"
+                alt=""></div>
+            <div class="project-copy">
+              <div class="project-title">Κατοικία – Γλυφάδα <span class="project-arrow">→</span></div>
+              <div class="project-meta">Ηλεκτρολογική εγκατάσταση</div>
+            </div>
+          </a>
+          <a class="project" data-project="tesla" href="project-detail.html?project=tesla">
+            <div class="project-image"><img
+                src="https://images.unsplash.com/photo-1597404294360-feeeda04612e?auto=format&fit=crop&w=900&q=88"
+                alt=""></div>
+            <div class="project-copy">
+              <div class="project-title">EV Charger – Tesla <span class="project-arrow">→</span></div>
+              <div class="project-meta">Ιδιωτική εγκατάσταση</div>
+            </div>
+          </a>
+          <a class="project" data-project="athens-store" href="project-detail.html?project=athens-store">
+            <div class="project-image"><img
+                src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=88"
+                alt=""></div>
+            <div class="project-copy">
+              <div class="project-title">Κατάστημα – Αθήνα <span class="project-arrow">→</span></div>
+              <div class="project-meta">Ηλεκτρολογική & Μηχανολογική Εγκατάσταση</div>
+            </div>
+          </a>
+          <a class="project" data-project="marcopoulo" href="project-detail.html?project=marcopoulo">
+            <div class="project-image"><img
+                src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&q=88"
+                alt=""></div>
+            <div class="project-copy">
+              <div class="project-title">Εξωτερικός Φωτισμός <span class="project-arrow">→</span></div>
+              <div class="project-meta">Κατοικία – Μαρκόπουλο</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="about">
+        <div class="about-image">
+          <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?auto=format&fit=crop&w=1200&q=88"
+            alt="">
+          <div class="about-overlay">ENGINEERING<br>A BETTER<br>TOMORROW<div class="rule" style="margin:16px 0 0"></div>
+          </div>
+        </div>
+        <div class="about-copy">
+          <div class="kicker">ΣΧΕΤΙΚΑ ΜΕ ΤΗΝ ALXCON ───</div>
+          <h2>ΤΕΧΝΙΚΗ ΓΝΩΣΗ.<br>ΠΡΑΚΤΙΚΗ ΑΞΙΑ.</h2>
+          <p>Η ALXCON – Alexandris Technical Constructions προσφέρει ολοκληρωμένες τεχνικές λύσεις σε ιδιωτικά και
+            επαγγελματικά έργα, με έμφαση στην ποιότητα, την αξιοπιστία και τη λεπτομέρεια. Συνδυάζουμε τεχνογνωσία,
+            σύγχρονα υλικά και εμπειρία, για να παραδώσουμε έργα που ξεχωρίζουν.</p>
+          <a class="btn" href="contact.html">ΠΕΡΙΣΣΟΤΕΡΑ ΓΙΑ ΕΜΑΣ →</a>
+        </div>
+        <div class="about-stats">
+          <div class="stat"><strong>+50</strong><span>ΟΛΟΚΛΗΡΩΜΕΝΑ ΕΡΓΑ</span></div>
+          <div class="stat"><strong>100%</strong><span>ΙΚΑΝΟΠΟΙΗΣΗ ΠΕΛΑΤΩΝ</span></div>
+          <div class="stat"><strong>ΣΥΓΧΡΟΝΕΣ</strong><span>ΤΕΧΝΟΛΟΓΙΕΣ</span></div>
+          <div class="stat"><strong>ΑΞΙΟΠΙΣΤΗ</strong><span>ΥΠΟΣΤΗΡΙΞΗ</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band" id="contact">
+      <div class="cta-photo">
+        <div class="cta-text">
+          <h3>ΕΧΕΤΕ ΕΝΑ ΝΕΟ ΕΡΓΟ ΣΤΟ ΜΥΑΛΟ ΣΑΣ;</h3>
+          <p>Ας το υλοποιήσουμε μαζί.</p>
+        </div>
+      </div>
+      <div class="cta-side">
+        <a class="btn" style="margin-top:0" href="mailto:info@alxcon.gr">ΕΠΙΚΟΙΝΩΝΗΣΤΕ ΜΑΖΙ ΜΑΣ →</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-top">
+        <img class="footer-logo" src="assets/alxcon-logo.png" alt="ALXCON">
+        <div class="footer-nav"><a href="#home">HOME</a><a href="projects.html">PROJECTS</a><a
+            href="contact.html">CONTACT</a></div>
+        <div class="social"><span>◎</span><span>in</span></div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 ALXCON. ALL RIGHTS RESERVED.</span>
+        <span class="contactline">Αθήνα, Ελλάδα &nbsp;&nbsp; | &nbsp;&nbsp; info@alxcon.gr &nbsp;&nbsp; | &nbsp;&nbsp;
+          +30 69X XXX XXXX</span>
+        <span>BUILT ON SOLID GROUND</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const slides = [...document.querySelectorAll('.slide')];
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const menu = document.querySelector('.menu');
+    const projectPreviewImages = {
+      glyfada: [
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=88',
+        'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=900&q=88',
+        'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=900&q=88'
+      ],
+      tesla: [
+        'https://images.unsplash.com/photo-1597404294360-feeeda04612e?auto=format&fit=crop&w=900&q=88',
+        'https://images.unsplash.com/photo-1617886322168-72f4e4a8b1a4?auto=format&fit=crop&w=900&q=88',
+        'https://images.unsplash.com/photo-1592833159155-c62df1b65634?auto=format&fit=crop&w=900&q=88'
+      ],
+      'athens-store': [
+        'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=88',
+        'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=88',
+        'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=88'
+      ],
+      marcopoulo: [
+        'https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=900&q=88',
+        'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=88',
+        'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=88'
+      ]
+    };
+    let current = 0;
+    mobileToggle.addEventListener('click', () => { const open = menu.classList.toggle('open'); mobileToggle.setAttribute('aria-expanded', open); });
+    document.querySelectorAll('.project[data-project]').forEach(project => {
+      const image = project.querySelector('.project-image img');
+      const images = projectPreviewImages[project.dataset.project] || [];
+      let imageIndex = 0;
+      setInterval(() => {
+        if (images.length < 2) return;
+        let nextIndex = imageIndex;
+        while (nextIndex === imageIndex) nextIndex = Math.floor(Math.random() * images.length);
+        imageIndex = nextIndex;
+        image.style.opacity = '0';
+        setTimeout(() => {
+          image.src = images[imageIndex];
+          image.style.opacity = '1';
+        }, 350);
+      }, 3800 + Math.floor(Math.random() * 1400));
+    });
+    function render() {
+      slides.forEach((s, i) => s.classList.toggle('active', i === current));
+      document.getElementById('counter').textContent = String(current + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+    }
+    function moveSlide(dir) {
+      current = (current + dir + slides.length) % slides.length;
+      render();
+    }
+    setInterval(() => moveSlide(1), 5000);
+  </script>
+</body>
+
+</html>

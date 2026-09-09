@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="el">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Project — ALXCON</title>
+    <style>
+        :root {
+            --bg: #050505;
+            --panel: #0b0b0b;
+            --text: #f3f3f3;
+            --muted: #aaa;
+            --line: #232323;
+            --max: 1440px
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Arial, Helvetica, sans-serif;
+            letter-spacing: .02em
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        .wrap {
+            width: min(calc(100% - 60px), var(--max));
+            margin: auto
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(5, 5, 5, .96);
+            border-bottom: 1px solid var(--line);
+            backdrop-filter: blur(10px)
+        }
+
+        .nav {
+            min-height: 86px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 28px
+        }
+
+        .logo {
+            width: 290px;
+            max-height: 70px;
+            object-fit: contain;
+            object-position: left center
+        }
+
+        .menu {
+            display: flex;
+            align-items: center;
+            gap: 34px;
+            font-size: 12px;
+            letter-spacing: .12em
+        }
+
+        .menu a {
+            opacity: .9
+        }
+
+        .menu a:hover {
+            opacity: 1
+        }
+
+        .quote {
+            border: 1px solid #6f6f6f;
+            padding: 14px 18px
+        }
+
+        .mobile-toggle {
+            display: none;
+            border: 1px solid #6f6f6f;
+            background: transparent;
+            color: #fff;
+            padding: 9px 11px;
+            font-size: 18px;
+            line-height: 1;
+            cursor: pointer
+        }
+
+        main {
+            padding: 68px 0 100px
+        }
+
+        .back {
+            font-size: 11px;
+            letter-spacing: .14em;
+            color: #c6c6c6
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 44px;
+            align-items: end;
+            margin-top: 30px;
+            padding-bottom: 44px;
+            border-bottom: 1px solid var(--line)
+        }
+
+        .kicker {
+            font-size: 11px;
+            letter-spacing: .3em;
+            color: #aaa;
+            margin-bottom: 20px
+        }
+
+        .hero h1 {
+            font-size: clamp(42px, 6vw, 78px);
+            font-weight: 300;
+            line-height: 1.02;
+            letter-spacing: .03em;
+            margin: 0
+        }
+
+        .hero p {
+            max-width: 600px;
+            color: #d2d2d2;
+            line-height: 1.65;
+            margin: 24px 0 0
+        }
+
+        .hero-meta {
+            justify-self: end;
+            width: min(100%, 360px);
+            border-left: 1px solid #3a3a3a;
+            padding-left: 24px
+        }
+
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 13px 0;
+            border-bottom: 1px solid #202020;
+            font-size: 12px
+        }
+
+        .meta-row span:last-child {
+            color: #bbb;
+            text-align: right
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+            margin-top: 44px
+        }
+
+        .gallery figure {
+            margin: 0;
+            background: var(--panel);
+            overflow: hidden
+        }
+
+        .gallery figure:first-child {
+            grid-column: span 2
+        }
+
+        .gallery img {
+            display: block;
+            width: 100%;
+            height: 360px;
+            object-fit: cover;
+            transition: transform .45s
+        }
+
+        .gallery figure:first-child img {
+            height: 560px
+        }
+
+        .gallery figure:hover img {
+            transform: scale(1.025)
+        }
+
+        .caption {
+            padding: 12px 14px;
+            color: #aaa;
+            font-size: 11px;
+            letter-spacing: .08em
+        }
+
+        .detail-footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            border-top: 1px solid var(--line);
+            margin-top: 48px;
+            padding-top: 25px;
+            font-size: 11px;
+            letter-spacing: .1em;
+            color: #bbb
+        }
+
+        @media(max-width:1000px) {
+            .menu {
+                display: none
+            }
+
+            .menu.open {
+                display: flex;
+                position: absolute;
+                left: 12px;
+                right: 12px;
+                top: 72px;
+                padding: 18px;
+                background: #0a0a0a;
+                border: 1px solid var(--line);
+                flex-direction: column;
+                align-items: stretch;
+                gap: 20px
+            }
+
+            .mobile-toggle {
+                display: block
+            }
+
+            .hero {
+                grid-template-columns: 1fr
+            }
+
+            .hero-meta {
+                justify-self: start;
+                width: min(100%, 500px);
+                margin-top: 15px
+            }
+
+            .gallery figure:first-child img {
+                height: 460px
+            }
+        }
+
+        @media(max-width:620px) {
+            .wrap {
+                width: calc(100% - 24px)
+            }
+
+            .nav {
+                min-height: 72px
+            }
+
+            .logo {
+                width: 210px
+            }
+
+            main {
+                padding: 48px 0 72px
+            }
+
+            .hero {
+                gap: 30px
+            }
+
+            .gallery {
+                grid-template-columns: 1fr;
+                gap: 12px
+            }
+
+            .gallery figure:first-child {
+                grid-column: auto
+            }
+
+            .gallery img,
+            .gallery figure:first-child img {
+                height: 290px
+            }
+
+            .detail-footer {
+                flex-direction: column;
+                line-height: 1.6
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="wrap nav"><a href="index.html"><img class="logo" src="assets/alxcon-logo.png" alt="ALXCON"></a>
+            <nav class="menu"><a href="index.html">HOME</a><a href="projects.html">PROJECTS</a><a
+                    href="contact.html">CONTACT</a><a class="quote" href="contact.html">ΖΗΤΗΣΤΕ ΠΡΟΣΦΟΡΑ →</a></nav>
+            <button class="mobile-toggle" type="button" aria-label="Άνοιγμα μενού" aria-expanded="false">☰</button>
+        </div>
+    </header>
+    <main class="wrap">
+        <a class="back" href="projects.html">← ΟΛΑ ΤΑ ΕΡΓΑ</a>
+        <section class="hero">
+            <div>
+                <div class="kicker" id="category"></div>
+                <h1 id="title"></h1>
+                <p id="description"></p>
+            </div>
+            <div class="hero-meta">
+                <div class="meta-row"><span>ΤΟΠΟΘΕΣΙΑ</span><span id="location"></span></div>
+                <div class="meta-row"><span>ΥΠΗΡΕΣΙΑ</span><span id="service"></span></div>
+                <div class="meta-row"><span>ΕΤΟΣ</span><span id="year"></span></div>
+            </div>
+        </section>
+        <section class="gallery" id="gallery" aria-label="Project album"></section>
+        <div class="detail-footer"><span>ALXCON — ALEXANDRIS TECHNICAL CONSTRUCTIONS</span><a href="contact.html">ΝΕΟ
+                ΕΡΓΟ →</a></div>
+    </main>
+    <script>
+        const projects = {
+            glyfada: { title: 'Κατοικία – Γλυφάδα', category: 'ΙΔΙΩΤΙΚΟ ΕΡΓΟ', location: 'Γλυφάδα, Αττική', service: 'Ηλεκτρολογική εγκατάσταση', year: '2026', description: 'Ολοκληρωμένη ηλεκτρολογική εγκατάσταση με έμφαση στη λειτουργικότητα, την καθαρή γραμμή και την καθημερινή άνεση.', images: [['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=88', 'Κύρια όψη έργου'], ['https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=88', 'Εσωτερικός χώρος'], ['https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1000&q=88', 'Λεπτομέρεια εγκατάστασης']] },
+            tesla: { title: 'EV Charger – Tesla', category: 'EV CHARGING', location: 'Βόρεια Προάστια, Αττική', service: 'Ιδιωτική εγκατάσταση', year: '2026', description: 'Μελέτη και εγκατάσταση λύσης φόρτισης ηλεκτρικού οχήματος, προσαρμοσμένη στις ανάγκες της κατοικίας.', images: [['https://images.unsplash.com/photo-1597404294360-feeeda04612e?auto=format&fit=crop&w=1600&q=88', 'Σημείο φόρτισης'], ['https://images.unsplash.com/photo-1617886322168-72f4e4a8b1a4?auto=format&fit=crop&w=1000&q=88', 'Εγκατάσταση'], ['https://images.unsplash.com/photo-1592833159155-c62df1b65634?auto=format&fit=crop&w=1000&q=88', 'Τελικό αποτέλεσμα']] },
+            'athens-store': { title: 'Κατάστημα – Αθήνα', category: 'ΕΠΑΓΓΕΛΜΑΤΙΚΟΣ ΧΩΡΟΣ', location: 'Αθήνα, Αττική', service: 'Ηλεκτρολογική & Μηχανολογική Εγκατάσταση', year: '2025', description: 'Τεχνική υποδομή επαγγελματικού χώρου με μελέτη, συντονισμό συνεργείων και προσεγμένη παράδοση.', images: [['https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=88', 'Κύρια όψη έργου'], ['https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1000&q=88', 'Επαγγελματικός χώρος'], ['https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=88', 'Λεπτομέρεια έργου']] },
+            marcopoulo: { title: 'Εξωτερικός Φωτισμός', category: 'ΦΩΤΙΣΜΟΣ', location: 'Μαρκόπουλο, Αττική', service: 'Εξωτερικός φωτισμός κατοικίας', year: '2025', description: 'Σχεδιασμός και υλοποίηση εξωτερικού φωτισμού που αναδεικνύει την αρχιτεκτονική και βελτιώνει την ασφάλεια.', images: [['https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&w=1600&q=88', 'Εξωτερικός φωτισμός'], ['https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1000&q=88', 'Κατοικία'], ['https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=88', 'Φωτιστική λεπτομέρεια']] }
+        };
+        const key = new URLSearchParams(location.search).get('project') || 'glyfada'; const project = projects[key] || projects.glyfada; document.title = project.title + ' — ALXCON';
+        const mobileToggle = document.querySelector('.mobile-toggle'); const menu = document.querySelector('.menu'); mobileToggle.addEventListener('click', () => { const open = menu.classList.toggle('open'); mobileToggle.setAttribute('aria-expanded', open); });
+        ['category', 'title', 'description', 'location', 'service', 'year'].forEach(id => document.getElementById(id).textContent = project[id]);
+        document.getElementById('gallery').innerHTML = project.images.map(image => '<figure><img src="' + image[0] + '" alt="' + image[1] + '"><figcaption class="caption">' + image[1] + '</figcaption></figure>').join('');
+    </script>
+</body>
+
+</html>
