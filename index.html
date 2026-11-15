@@ -605,6 +605,12 @@
         line-height: 1.8
       }
     }
+
+    .apps-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:14px; }
+    .app-link { display:block; padding:24px; border:1px solid var(--line); background:var(--panel); }
+    .app-link:hover, .app-link:focus-visible { border-color:var(--muted); }
+    .app-link h3 { margin:0 0 10px; font-size:18px; font-weight:400; }
+    .app-link p { margin:0; color:var(--muted); font-size:13px; line-height:1.6; }
   </style>
 </head>
 
@@ -793,6 +799,23 @@
           <div class="stat"><strong>100%</strong><span>ΙΚΑΝΟΠΟΙΗΣΗ ΠΕΛΑΤΩΝ</span></div>
           <div class="stat"><strong>ΣΥΓΧΡΟΝΕΣ</strong><span>ΤΕΧΝΟΛΟΓΙΕΣ</span></div>
           <div class="stat"><strong>ΑΞΙΟΠΙΣΤΗ</strong><span>ΥΠΟΣΤΗΡΙΞΗ</span></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="section" id="applications" aria-labelledby="applications-title">
+      <div class="wrap">
+        <div class="section-head"><h2 id="applications-title">Εφαρμογές</h2></div>
+        <div class="apps-grid">
+          <a class="app-link" href="https://ctrlfreak.alexandrisindustries.gr/">
+            <h3>ctrlFreak <span aria-hidden="true">→</span></h3>
+            <p>Άνοιγμα εφαρμογής</p>
+          </a>
+          <a class="app-link" href="https://watts.alexandrisindustries.gr/">
+            <h3>Watt’s The Plan <span aria-hidden="true">→</span></h3>
+            <p>Ηλεκτρολογική σχεδίαση και διαχείριση έργων.</p>
+          </a>
         </div>
       </div>
     </section>
